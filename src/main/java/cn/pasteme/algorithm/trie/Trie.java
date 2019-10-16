@@ -18,7 +18,7 @@ import java.util.List;
  * 简化版字典树，支持离线 build 成 model
  *
  * @author Lucien
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Data
 @Slf4j
@@ -164,6 +164,7 @@ public class Trie implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            log.error("Trie class not found");
             e.printStackTrace();
         }
         return null;

@@ -1,2 +1,3 @@
-# PasteMeAlgorithm
+# PasteMe Algorithm
+
 PasteMe Algorithm Library

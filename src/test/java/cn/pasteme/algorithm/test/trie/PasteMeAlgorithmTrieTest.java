@@ -2,6 +2,7 @@ package cn.pasteme.algorithm.test.trie;
 
 import cn.pasteme.algorithm.trie.Trie;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,8 +14,9 @@ import java.util.stream.Collectors;
 
 /**
  * @author Lucien
- * @version 1.0.0
+ * @version 1.0.1
  */
+@Slf4j
 public class PasteMeAlgorithmTrieTest {
 
     private Trie trie = new Trie();
