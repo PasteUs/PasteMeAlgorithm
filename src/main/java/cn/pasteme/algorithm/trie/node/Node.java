@@ -10,15 +10,25 @@ import lombok.Data;
  * 字典树的节点
  *
  * @author Lucien
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Data
 public class Node implements Serializable {
 
     /**
+     * 序列化 UID，新增字段请在最后面增加
+     */
+    private static final long serialVersionUID = -1745293409138075988L;
+
+    /**
      * 节点的深度就是当前匹配串的长度
      */
     private int depth;
+
+    /**
+     * 当前节点是否为某个单词的结束
+     */
+    private boolean end;
 
     /**
      * 记录转移状态
@@ -76,7 +86,16 @@ public class Node implements Serializable {
      *
      * @return 子节点数量
      */
-    Integer size() {
-        return this.next.keySet().size();
+    public int size() {
+        return this.next.size();
+    }
+
+    /**
+     * 当前节点是否没有子节点
+     *
+     * @return boolean
+     */
+    public boolean isEmpty() {
+        return this.next.isEmpty();
     }
 }
