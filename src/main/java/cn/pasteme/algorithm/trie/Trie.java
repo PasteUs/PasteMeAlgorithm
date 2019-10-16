@@ -21,6 +21,7 @@ import java.util.List;
  * @version 1.0.1
  */
 @Data
+@Slf4j
 public class Trie implements Serializable {
 
     /**
@@ -163,7 +164,6 @@ public class Trie implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            System.err.println("Trie class not found");
             e.printStackTrace();
         }
         return null;
