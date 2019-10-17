@@ -1,8 +1,9 @@
 package cn.pasteme.algorithm.trie.impl;
 
+import cn.pasteme.algorithm.trie.AbstractTrie;
 import cn.pasteme.algorithm.trie.Trie;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
@@ -10,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +20,8 @@ import java.util.TreeMap;
  * 简化版字典树，支持离线 build 成 model
  *
  * @author Lucien
- * @version 1.0.3
+ * @version 1.0.4
  */
-@Data
 @Slf4j
 public class NormalTrie implements Trie {
 
@@ -32,8 +31,8 @@ public class NormalTrie implements Trie {
      * @author Lucien
      * @version 1.0.1
      */
-    @Data
-    static class Node implements Serializable {
+    @Getter
+    public static class Node extends AbstractTrie.AbstractNode {
 
         /**
          * 序列化 UID，新增字段请在最后面增加
@@ -41,82 +40,45 @@ public class NormalTrie implements Trie {
         private static final long serialVersionUID = -1745293409138075988L;
 
         /**
-         * 节点的深度就是当前匹配串的长度
-         */
-        private int depth;
-
-        /**
-         * 当前节点是否为某个单词的结束
-         */
-        private boolean end;
-
-        /**
-         * 记录转移状态
+         * 转移状态
          */
         private Map<Character, Node> next;
 
-        /**
-         * 新建一个深度为 depth 的节点
-         *
-         * @param depth 深度
-         */
         Node(int depth) {
-            this.depth = depth;
+            super(depth);
             this.next = new TreeMap<>();
         }
 
-        /**
-         * 当前节点沿着某字符会到达的节点
-         *
-         * @param character 字符
-         * @return Node
-         */
-        Node get(Character character) {
-            if (null == this.next) {
-                this.next = new TreeMap<>();
-            }
-
-            if (this.next.containsKey(character)) {
-                return this.next.get(character);
-            }
-
-            return null;
-        }
-
-        /**
-         * 为当前节点添加一个由某字符转移的子节点
-         *
-         * @param character 字符
-         * @return Node
-         */
-        Node put(Character character) {
+        @Override
+        public Node add(Character character) {
             Node buffer = this.get(character);
             if (null != buffer) {
                 return buffer;
             }
 
-            buffer = new Node(this.depth + 1);
-            this.next.put(character, buffer);
+            buffer = new Node(this.getDepth() + 1);
+            this.getNext().put(character, buffer);
 
             return buffer;
         }
 
-        /**
-         * 返回当前节点有多少子节点
-         *
-         * @return 子节点数量
-         */
-        public int size() {
-            return this.next.size();
+        @Override
+        public Node get(Character character) {
+            if (this.getNext().containsKey(character)) {
+                return this.getNext().get(character);
+            }
+
+            return null;
         }
 
-        /**
-         * 当前节点是否没有子节点
-         *
-         * @return boolean
-         */
-        boolean isEmpty() {
-            return this.next.isEmpty();
+        @Override
+        public int size() {
+            return this.getNext().size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return this.getNext().isEmpty();
         }
     }
 
@@ -142,16 +104,9 @@ public class NormalTrie implements Trie {
     public void add(String word) {
         Node buffer = this.root;
         for (Character character : word.toCharArray()) {
-            buffer = buffer.put(character);
+            buffer = buffer.add(character);
         }
         buffer.setEnd(true);
-    }
-
-    @Override
-    public void addAll(List<String> dictionary) {
-        for (String each : dictionary) {
-            add(each);
-        }
     }
 
     @Override
