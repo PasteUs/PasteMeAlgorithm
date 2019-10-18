@@ -1,9 +1,7 @@
 package cn.pasteme.algorithm.test.trie.common;
 
 import cn.pasteme.algorithm.trie.Trie;
-import cn.pasteme.algorithm.trie.impl.NormalTrie;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 
@@ -18,7 +16,6 @@ import java.util.stream.Collectors;
  * @author Lucien
  * @version 1.0.1
  */
-@Data
 @Slf4j
 public class Common {
 
@@ -30,9 +27,7 @@ public class Common {
     /**
      * 字典
      */
-    private List<String> dictionary = Arrays.asList(
-        "你好", "世界！", "你好，世界！", "Hello", "World!", "Hello World!"
-    );
+    private List<String> dictionary = Arrays.asList("你好", "世界！", "你好，世界！", "Hello", "World!", "Hello World!");
 
     public Common(Trie trie) {
         this.trie = trie;
@@ -70,7 +65,6 @@ public class Common {
 
     private Trie loadTrie(String filePath) {
         log.warn("load from {}", filePath);
-        Trie trie = new NormalTrie();
         Assert.assertTrue(trie.load(filePath));
         return trie;
     }

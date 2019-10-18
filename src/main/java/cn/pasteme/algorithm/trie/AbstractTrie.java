@@ -1,12 +1,7 @@
 package cn.pasteme.algorithm.trie;
 
-import cn.pasteme.algorithm.trie.Trie;
-import cn.pasteme.algorithm.trie.impl.NormalTrie;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Lucien
