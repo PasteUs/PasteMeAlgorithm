@@ -68,14 +68,14 @@
                 <configuration>
                     <message>Maven artifacts for ${project.version}</message>
                     <noJekyll>true</noJekyll>
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory><!--本地jar地址-->
-                    <branch>refs/heads/master</branch><!--分支的名称-->
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <branch>refs/heads/master</branch>
                     <merge>true</merge>
                     <includes>
                         <include>**/*</include>
                     </includes>
-                    <repositoryName>MavenRepository</repositoryName><!--对应github上创建的仓库名称 name-->
-                    <repositoryOwner>PasteUs</repositoryOwner><!--github 仓库所有者即登录用户名-->
+                    <repositoryName>MavenRepository</repositoryName>
+                    <repositoryOwner>PasteUs</repositoryOwner>
                 </configuration>
                 <executions>
                     <execution>
