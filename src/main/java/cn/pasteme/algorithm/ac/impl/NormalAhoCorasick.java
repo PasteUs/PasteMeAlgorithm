@@ -152,7 +152,7 @@ public class NormalAhoCorasick implements AhoCorasick {
                 queue.add(next);
                 while (null != fail) {
                     if (null != fail.get(pair.getKey())) {
-                        next.setFail(cur.getFail().get(pair.getKey()));
+                        next.setFail(fail.get(pair.getKey()));
                         break;
                     }
                     fail = fail.getFail();
@@ -177,19 +177,22 @@ public class NormalAhoCorasick implements AhoCorasick {
     public List<String> match(String text) {
         List<String> result = new ArrayList<>();
         Node cur = this.root;
-        for (Character character : text.toCharArray()) {
-            if (cur.getNext().containsKey(character)) {
-                Node buffer = cur.get(character);
+        int index = 0;
+        while (index < text.length()) {
+            if (cur.getNext().containsKey(text.charAt(index))) {
+                Node buffer = cur.get(text.charAt(index));
                 while (buffer != root) {
                     if (buffer.isEnd()) {
                         result.add(this.dictionary[buffer.index]);
                     }
                     buffer = buffer.getFail();
                 }
-                cur = cur.get(character);
+                cur = cur.get(text.charAt(index++));
             } else {
                 if (cur != root) {
                     cur = cur.fail;
+                } else {
+                    index++;
                 }
             }
         }

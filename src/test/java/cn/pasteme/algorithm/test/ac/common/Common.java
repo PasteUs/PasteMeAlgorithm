@@ -30,7 +30,7 @@ public class Common {
     /**
      * 匹配的文本
      */
-    private String text = "你好，世界！Hello World!\n多行文本测试\nMultiline test";
+    private String text = "你好，世界！Hello World!\n多行文本测试\nMultiline test\n你好！";
 
     private boolean equals(List<String> left, List<String> right) {
         return new TreeSet<>(left).equals(new TreeSet<>(right));
