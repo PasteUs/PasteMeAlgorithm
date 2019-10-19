@@ -9,6 +9,10 @@ import java.util.List;
  */
 public interface Trie extends Serializable {
 
+    /**
+     * @author Lucien
+     * @version 1.0.0
+     */
     interface Node extends Serializable {
 
         /**

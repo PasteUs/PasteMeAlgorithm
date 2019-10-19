@@ -31,6 +31,10 @@ public class NormalAhoCorasick implements AhoCorasick {
      */
     private static final long serialVersionUID = -1349524541271539944L;
 
+    /**
+     * @author Lucien
+     * @version 1.0.0
+     */
     @Getter
     static class Node extends AbstractTrie.AbstractNode {
 
