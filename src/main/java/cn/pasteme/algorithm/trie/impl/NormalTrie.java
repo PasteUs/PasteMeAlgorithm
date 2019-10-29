@@ -5,6 +5,8 @@ import cn.pasteme.algorithm.trie.Trie;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,13 +25,15 @@ import java.util.TreeMap;
  * @version 1.0.4
  */
 @Slf4j
+@Component
+@Qualifier("normalTrie")
 public class NormalTrie implements Trie {
 
     /**
      * 字典树的节点
      *
      * @author Lucien
-     * @version 1.0.1
+     * @version 1.0.2
      */
     @Getter
     public static class Node extends AbstractTrie.AbstractNode {
