@@ -4,13 +4,12 @@ on: [pull_request]
 
 jobs:
   package:
-    name: Package with JDK ${{ matrix.jdk_version }} and mysql ${{ matrix.mysql_version }}
+    name: Package with JDK ${{ matrix.jdk_version }}
 
     strategy:
       matrix:
         jdk_version: [11, 12, 13]
         mvn_action: [package]
-        mysql_version: [5.5, 5.7, 8]
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
