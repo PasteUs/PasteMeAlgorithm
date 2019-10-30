@@ -6,6 +6,9 @@ import cn.pasteme.algorithm.ac.AhoCorasick;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,9 +24,11 @@ import java.util.TreeMap;
 
 /**
  * @author Lucien
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Slf4j
+@Component
+@Qualifier("normalAhoCorasick")
 public class NormalAhoCorasick implements AhoCorasick {
 
     /**

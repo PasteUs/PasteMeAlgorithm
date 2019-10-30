@@ -21,4 +21,4 @@ jobs:
           GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
           GITHUB_PASSWORD: ${{ secrets.GITHUB_PASSWORD }}
         run: |
-          mvn --settings settings.xml --file pom.xml deploy
+          mvn --settings .github/settings.xml --file pom.xml deploy
