@@ -1,7 +1,7 @@
 package cn.pasteme.algorithm.test.nlp;
 
 import cn.pasteme.algorithm.nlp.NLP;
-import cn.pasteme.algorithm.nlp.impl.NLPImpl;
+import cn.pasteme.algorithm.nlp.impl.NormalNLP;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public class PasteMeAlgorithmNLPTest {
 
-    private NLP nlp = new NLPImpl();
+    private NLP nlp = new NormalNLP();
 
     @Test
     public void NLPTokenizerTest() {

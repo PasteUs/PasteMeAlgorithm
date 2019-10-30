@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class NLPImpl implements NLP {
+public class NormalNLP implements NLP {
 
     private List<String> stoppedWords = new ArrayList<>();
 
-    public NLPImpl() {
+    public NormalNLP() {
         try {
             File file = new File("dictionary/stoppedWords.txt");
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
