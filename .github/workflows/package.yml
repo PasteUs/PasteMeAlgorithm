@@ -1,18 +1,28 @@
 name: Maven Package
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   package:
+    name: Package with JDK ${{ matrix.jdk_version }}
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk_version: [11, 12, 13]
+        mvn_action: [package]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v1
-      - name: Set up JDK 11
+
+      - name: Set up JDK ${{ matrix.jdk_version }}
         uses: actions/setup-java@v1
         with:
-          java-version: 11
-      - name: Maven package
+          java-version: ${{ matrix.jdk_version }}
+
+      - name: Maven ${{ matrix.mvn_action }}
         run: |
-          mvn --file pom.xml package
+          mvn --file pom.xml \
+              ${{ matrix.mvn_action }}

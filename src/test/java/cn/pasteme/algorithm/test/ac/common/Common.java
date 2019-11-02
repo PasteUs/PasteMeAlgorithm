@@ -5,6 +5,7 @@ import cn.pasteme.algorithm.ac.AhoCorasick;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
@@ -58,6 +59,14 @@ public class Common {
         Assert.assertTrue(ac.save(filePath));
 
         ac.load(filePath);
+
+        if (!deleteFile(filePath)) {
+            log.error("Delete file false, file path = {}", filePath);
+        }
+    }
+
+    private boolean deleteFile(String filePath) {
+        return new File(filePath).delete();
     }
 
     private void test(AhoCorasick ac) {
