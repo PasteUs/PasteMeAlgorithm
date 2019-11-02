@@ -2,7 +2,7 @@ package cn.pasteme.algorithm.test.nlp;
 
 import cn.pasteme.algorithm.nlp.NLP;
 import cn.pasteme.algorithm.nlp.impl.NormalNLP;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -17,6 +17,6 @@ public class PasteMeAlgorithmNLPTest {
 
     @Test
     public void NLPTokenizerTest() {
-        Assert.assertEquals(Arrays.asList("NLP", "中文", "分词", "测试", "English", "tokenizer", "test"), nlp.tokenize("NLP 中文分词测试，English tokenizer test"));
+        assertEquals(Arrays.asList("NLP", "中文", "分词", "测试", "English", "tokenizer", "test"), nlp.tokenize("NLP 中文分词测试，English tokenizer test"));
     }
 }

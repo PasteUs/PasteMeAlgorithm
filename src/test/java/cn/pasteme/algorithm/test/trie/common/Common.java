@@ -3,7 +3,7 @@ package cn.pasteme.algorithm.test.trie.common;
 import cn.pasteme.algorithm.trie.Trie;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -49,10 +49,10 @@ public class Common {
 
         trie.addAll(dictionary);
 
-        Assert.assertTrue(testTrie(trie));
+        assertTrue(testTrie(trie));
 
-        Assert.assertTrue(trie.save(filePath));
-        Assert.assertTrue(testTrie(loadTrie(filePath)));
+        assertTrue(trie.save(filePath));
+        assertTrue(testTrie(loadTrie(filePath)));
 
         if (!deleteFile(filePath)) {
             log.error("Delete file false, file path = {}", filePath);
@@ -65,31 +65,31 @@ public class Common {
 
     private Trie loadTrie(String filePath) {
         log.warn("load from {}", filePath);
-        Assert.assertTrue(trie.load(filePath));
+        assertTrue(trie.load(filePath));
         return trie;
     }
 
     private boolean testTrie(Trie trie) {
         for (String each : dictionary) {
-            Assert.assertTrue(trie.exist(each));
+            assertTrue(trie.exist(each));
         }
 
-        Assert.assertFalse(trie.exist("Test"));
+        assertFalse(trie.exist("Test"));
 
-        Assert.assertEquals(
+        assertEquals(
                 new TreeSet<>(dictionary.stream().filter(each -> each.startsWith("你")).collect(Collectors.toList())),
                 new TreeSet<>(trie.getByPrefix("你"))
         );
 
-        Assert.assertEquals(
+        assertEquals(
                 new TreeSet<>(dictionary.stream().filter(each -> each.startsWith("H")).collect(Collectors.toList())),
                 new TreeSet<>(trie.getByPrefix("H"))
         );
 
         List<String> result = trie.getByPrefix("");
 
-        Assert.assertEquals(dictionary.size(), result.size());
-        Assert.assertEquals(new TreeSet<>(dictionary), new TreeSet<>(result));
+        assertEquals(dictionary.size(), result.size());
+        assertEquals(new TreeSet<>(dictionary), new TreeSet<>(result));
 
         return true;
     }
