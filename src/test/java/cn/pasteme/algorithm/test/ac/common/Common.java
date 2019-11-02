@@ -3,7 +3,7 @@ package cn.pasteme.algorithm.test.ac.common;
 import cn.pasteme.algorithm.ac.AhoCorasick;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -48,7 +48,7 @@ public class Common {
     }
 
     public void run() {
-        Assert.assertTrue(ac.build(dictionary));
+        assertTrue(ac.build(dictionary));
 
         test(ac);
 
@@ -56,7 +56,7 @@ public class Common {
 
         log.warn("filePath = {}", filePath);
 
-        Assert.assertTrue(ac.save(filePath));
+        assertTrue(ac.save(filePath));
 
         ac.load(filePath);
 
@@ -72,6 +72,6 @@ public class Common {
     private void test(AhoCorasick ac) {
         List<String> result = ac.match(text);
         log.warn("match result = {}", result);
-        Assert.assertTrue(equals(Arrays.asList("你好", "世界！", "你好，世界！", "Hello", "World!", "Hello World!"), result));
+        assertTrue(equals(Arrays.asList("你好", "世界！", "你好，世界！", "Hello", "World!", "Hello World!"), result));
     }
 }

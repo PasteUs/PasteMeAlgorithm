@@ -1,12 +1,17 @@
 package cn.pasteme.algorithm.pair;
 
-import java.util.Map;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author Lucien Shui
  * @version 1.0.2
  */
-public class Pair<K, V> implements Map.Entry<K, V> {
+@Data
+public class Pair<K, V> implements Serializable {
+
+    private static final long serialVersionUID = 4215719901707876545L;
 
     private K key;
 
@@ -15,24 +20,5 @@ public class Pair<K, V> implements Map.Entry<K, V> {
     public Pair (K key, V value) {
         this.key = key;
         this.value = value;
-    }
-
-    @Override
-    public K getKey() {
-        return this.key;
-    }
-
-    @Override
-    public V getValue() {
-        return this.value;
-    }
-
-    public K setKey(K k) {
-        return this.key = k;
-    }
-
-    @Override
-    public V setValue(V v) {
-        return this.value = v;
     }
 }
