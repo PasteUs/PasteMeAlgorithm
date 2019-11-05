@@ -45,6 +45,6 @@ public class NormalNLP implements NLP {
     @Override
     public List<String> tokenize(String content) {
         return HanLP.segment(content).stream()
-                .map(item -> item.word).filter(item -> !stoppedWords.contains(item.trim())).collect(Collectors.toList());
+                .map(item -> item.word).filter(item -> !item.isBlank() && !stoppedWords.contains(item.trim())).collect(Collectors.toList());
     }
 }
