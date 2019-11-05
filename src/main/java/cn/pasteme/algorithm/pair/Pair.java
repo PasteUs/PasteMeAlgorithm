@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author Lucien Shui
- * @version 1.0.2
+ * @version 1.0.3
  */
 @Data
 public class Pair<K, V> implements Serializable {
@@ -17,7 +17,7 @@ public class Pair<K, V> implements Serializable {
 
     private V value;
 
-    public Pair (K key, V value) {
+    public Pair(K key, V value) {
         this.key = key;
         this.value = value;
     }

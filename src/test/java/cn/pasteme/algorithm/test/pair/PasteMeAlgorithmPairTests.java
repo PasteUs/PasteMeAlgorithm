@@ -2,14 +2,14 @@ package cn.pasteme.algorithm.test.pair;
 
 import cn.pasteme.algorithm.pair.Pair;
 
-import static org.junit.Assert.*;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Lucien
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Slf4j
 public class PasteMeAlgorithmPairTests {

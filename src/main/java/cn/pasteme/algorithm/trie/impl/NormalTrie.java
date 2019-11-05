@@ -2,17 +2,12 @@ package cn.pasteme.algorithm.trie.impl;
 
 import cn.pasteme.algorithm.trie.AbstractTrie;
 import cn.pasteme.algorithm.trie.Trie;
-
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,76 +17,18 @@ import java.util.TreeMap;
  * 简化版字典树，支持离线 build 成 model
  *
  * @author Lucien
- * @version 1.0.4
+ * @version 1.0.5
  */
 @Slf4j
 @Component
+@Scope("prototype")
 @Qualifier("normalTrie")
 public class NormalTrie implements Trie {
-
-    /**
-     * 字典树的节点
-     *
-     * @author Lucien
-     * @version 1.0.2
-     */
-    @Getter
-    public static class Node extends AbstractTrie.AbstractNode {
-
-        /**
-         * 序列化 UID，新增字段请在最后面增加
-         */
-        private static final long serialVersionUID = -1745293409138075988L;
-
-        /**
-         * 转移状态
-         */
-        private Map<Character, Node> next;
-
-        Node(int depth) {
-            super(depth);
-            this.next = new TreeMap<>();
-        }
-
-        @Override
-        public Node add(Character character, int index) {
-            Node buffer = this.get(character);
-            if (null != buffer) {
-                return buffer;
-            }
-
-            buffer = new Node(this.getDepth() + 1);
-            this.getNext().put(character, buffer);
-
-            return buffer;
-        }
-
-        @Override
-        public Node get(Character character) {
-            if (this.getNext().containsKey(character)) {
-                return this.getNext().get(character);
-            }
-
-            return null;
-        }
-
-        @Override
-        public int size() {
-            return this.getNext().size();
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return this.getNext().isEmpty();
-        }
-    }
-
 
     /**
      * 序列化 UID，新增字段请在最后面增加
      */
     private static final long serialVersionUID = -2869176954782360946L;
-
     /**
      * 字典树根节点
      */
@@ -192,5 +129,62 @@ public class NormalTrie implements Trie {
         return load(path, (objectInputStream) -> {
             this.root = (Node) objectInputStream.readObject();
         });
+    }
+
+    /**
+     * 字典树的节点
+     *
+     * @author Lucien
+     * @version 1.0.2
+     */
+    @Getter
+    public static class Node extends AbstractTrie.AbstractNode {
+
+        /**
+         * 序列化 UID，新增字段请在最后面增加
+         */
+        private static final long serialVersionUID = -1745293409138075988L;
+
+        /**
+         * 转移状态
+         */
+        private Map<Character, Node> next;
+
+        Node(int depth) {
+            super(depth);
+            this.next = new TreeMap<>();
+        }
+
+        @Override
+        public Node add(Character character, int index) {
+            Node buffer = this.get(character);
+            if (null != buffer) {
+                return buffer;
+            }
+
+            buffer = new Node(this.getDepth() + 1);
+            this.getNext().put(character, buffer);
+
+            return buffer;
+        }
+
+        @Override
+        public Node get(Character character) {
+            if (this.getNext().containsKey(character)) {
+                return this.getNext().get(character);
+            }
+
+            return null;
+        }
+
+        @Override
+        public int size() {
+            return this.getNext().size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return this.getNext().isEmpty();
+        }
     }
 }

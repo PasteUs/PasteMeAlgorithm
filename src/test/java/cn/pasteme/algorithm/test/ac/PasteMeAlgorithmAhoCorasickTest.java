@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * @author Lucien
- * @version 1.1.0
+ * @version 1.1.1
  */
 @Slf4j
 @SpringBootTest
@@ -43,15 +43,15 @@ public class PasteMeAlgorithmAhoCorasickTest {
 
     private List<String> twiceList = Arrays.asList("你好", "HH");
 
-    private <T> boolean equals(List<T> left, List<T> right) {
-        return new TreeSet<>(left).equals(new TreeSet<>(right));
-    }
-
     /**
      * AC 自动机
      */
     @Autowired
     private Map<String, AhoCorasick> ahoCorasickMap;
+
+    private <T> boolean equals(List<T> left, List<T> right) {
+        return new TreeSet<>(left).equals(new TreeSet<>(right));
+    }
 
     @Test
     public void normalAhoCorasickTest() {

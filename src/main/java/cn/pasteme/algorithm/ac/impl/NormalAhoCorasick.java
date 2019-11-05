@@ -1,20 +1,16 @@
 package cn.pasteme.algorithm.ac.impl;
 
 import cn.pasteme.algorithm.ac.AhoCorasick;
-
 import cn.pasteme.algorithm.pair.Pair;
 import cn.pasteme.algorithm.trie.AbstractTrie.AbstractNode;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +23,11 @@ import java.util.stream.Collectors;
  * 朴素 AhoCorasick
  *
  * @author Lucien
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Slf4j
 @Component
+@Scope("prototype")
 @Qualifier("normalAhoCorasick")
 public class NormalAhoCorasick implements AhoCorasick {
 
@@ -43,102 +40,14 @@ public class NormalAhoCorasick implements AhoCorasick {
      * 整棵树的节点个数
      */
     private int size;
-
-    /**
-     * @author Lucien
-     * @version 1.0.0
-     */
-    @Getter
-    static class Node extends AbstractNode {
-
-        /**
-         * 序列化 UID，新增字段请在最后面增加
-         */
-        private static final long serialVersionUID = 1821646667038760238L;
-
-        /**
-         * 转移状态
-         */
-        private Map<Character, Node> next;
-
-        /**
-         * 节点下标
-         */
-        @Setter
-        private int nodeIndex;
-
-        /**
-         * 词在词典中的下标
-         */
-        @Setter
-        private int wordIndex;
-
-        /**
-         * Fail 指针
-         */
-        @Setter
-        @Getter
-        private Node fail;
-
-        @Override
-        public boolean isEnd() {
-            return this.wordIndex != -1;
-        }
-
-        Node(int depth, int nodeIndex) {
-            super(depth);
-            this.next = new TreeMap<>();
-            this.fail = null;
-            this.nodeIndex = nodeIndex;
-            this.wordIndex = -1;
-        }
-
-        @Override
-        public Node add(Character character, int index) {
-            Node buffer = this.get(character);
-            if (null != buffer) {
-                return buffer;
-            }
-
-            buffer = new Node(this.getDepth() + 1, index);
-            this.getNext().put(character, buffer);
-
-            return buffer;
-        }
-
-        @Override
-        public Node get(Character character) {
-            if (this.getNext().containsKey(character)) {
-                return this.getNext().get(character);
-            }
-
-            return null;
-        }
-
-        @Override
-        public int size() {
-            return this.getNext().size();
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return this.getNext().isEmpty();
-        }
-    }
-
     /**
      * 字典树根节点
      */
     private Node root;
-
     /**
      * 字典
      */
     private String[] dictionary;
-
-    interface MatchWords {
-        void match(Node buffer);
-    }
 
     public NormalAhoCorasick() {
         this.root = new Node(0, size++);
@@ -283,5 +192,91 @@ public class NormalAhoCorasick implements AhoCorasick {
             this.root = (Node) objectInputStream.readObject();
             this.dictionary = (String[]) objectInputStream.readObject();
         });
+    }
+
+    interface MatchWords {
+        void match(Node buffer);
+    }
+
+    /**
+     * @author Lucien
+     * @version 1.0.0
+     */
+    @Getter
+    static class Node extends AbstractNode {
+
+        /**
+         * 序列化 UID，新增字段请在最后面增加
+         */
+        private static final long serialVersionUID = 1821646667038760238L;
+
+        /**
+         * 转移状态
+         */
+        private Map<Character, Node> next;
+
+        /**
+         * 节点下标
+         */
+        @Setter
+        private int nodeIndex;
+
+        /**
+         * 词在词典中的下标
+         */
+        @Setter
+        private int wordIndex;
+
+        /**
+         * Fail 指针
+         */
+        @Setter
+        @Getter
+        private Node fail;
+
+        Node(int depth, int nodeIndex) {
+            super(depth);
+            this.next = new TreeMap<>();
+            this.fail = null;
+            this.nodeIndex = nodeIndex;
+            this.wordIndex = -1;
+        }
+
+        @Override
+        public boolean isEnd() {
+            return this.wordIndex != -1;
+        }
+
+        @Override
+        public Node add(Character character, int index) {
+            Node buffer = this.get(character);
+            if (null != buffer) {
+                return buffer;
+            }
+
+            buffer = new Node(this.getDepth() + 1, index);
+            this.getNext().put(character, buffer);
+
+            return buffer;
+        }
+
+        @Override
+        public Node get(Character character) {
+            if (this.getNext().containsKey(character)) {
+                return this.getNext().get(character);
+            }
+
+            return null;
+        }
+
+        @Override
+        public int size() {
+            return this.getNext().size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return this.getNext().isEmpty();
+        }
     }
 }

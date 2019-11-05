@@ -3,7 +3,6 @@ package cn.pasteme.algorithm.test.trie.common;
 import cn.pasteme.algorithm.trie.Trie;
 
 import lombok.extern.slf4j.Slf4j;
-import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -12,9 +11,13 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author Lucien
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Slf4j
 public class Common {
