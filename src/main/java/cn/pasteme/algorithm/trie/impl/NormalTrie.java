@@ -54,7 +54,7 @@ public class NormalTrie implements Trie {
         }
 
         @Override
-        public Node add(Character character) {
+        public Node add(Character character, int index) {
             Node buffer = this.get(character);
             if (null != buffer) {
                 return buffer;
@@ -105,10 +105,10 @@ public class NormalTrie implements Trie {
     }
 
     @Override
-    public void add(String word) {
+    public void add(String word, int index) {
         Node buffer = this.root;
         for (Character character : word.toCharArray()) {
-            buffer = buffer.add(character);
+            buffer = buffer.add(character, -1);
         }
         buffer.setEnd(true);
     }
@@ -182,32 +182,15 @@ public class NormalTrie implements Trie {
 
     @Override
     public boolean save(String path) {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(path);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        return save(path, (objectOutputStream) -> {
             objectOutputStream.writeObject(this.root);
-            objectOutputStream.close();
-            fileOutputStream.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+        });
     }
 
     @Override
     public boolean load(String path) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(path);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        return load(path, (objectInputStream) -> {
             this.root = (Node) objectInputStream.readObject();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            log.error("Trie class not found");
-            e.printStackTrace();
-        }
-        return false;
+        });
     }
 }

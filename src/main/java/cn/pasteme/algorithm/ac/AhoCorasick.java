@@ -1,13 +1,15 @@
 package cn.pasteme.algorithm.ac;
 
-import java.io.Serializable;
+import cn.pasteme.algorithm.common.Persistent;
+import cn.pasteme.algorithm.pair.Pair;
+
 import java.util.List;
 
 /**
  * @author Lucien
  * @version 1.0.0
  */
-public interface AhoCorasick extends Serializable {
+public interface AhoCorasick extends Persistent {
 
     /**
      * 将词典构建为自动机
@@ -18,7 +20,7 @@ public interface AhoCorasick extends Serializable {
     boolean build(List<String> dictionary);
 
     /**
-     * 文本匹配
+     * 朴素文本匹配，只返回出现过的词的集合
      *
      * @param text 文本
      * @return 命中的词
@@ -26,18 +28,18 @@ public interface AhoCorasick extends Serializable {
     List<String> match(String text);
 
     /**
-     * 将对象持久化至磁盘
+     * 计数文本匹配，返回出现的词以及它出现的次数
      *
-     * @param filePath 文件路径
-     * @return 持久化成功与否
+     * @param text 文本
+     * @return 命中的词以及它出现的次数
      */
-    boolean save(String filePath);
+    List<Pair<String, Long>> countMatch(String text);
 
     /**
-     * 从磁盘加载对象
+     * 下标文本匹配，返回出现的词以及它在文本中的下标
      *
-     * @param filePath 文件路径
-     * @return 加载成功与否
+     * @param text 文本
+     * @return 命中的词以及它出现的位置
      */
-    boolean load(String filePath);
+    List<Pair<String, Long>> locationMatch(String text);
 }

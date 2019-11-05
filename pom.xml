@@ -14,6 +14,14 @@
     <name>PasteMe Algorithm</name>
     <description>PasteMe Algorithm Collection</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.7.5</version>
+        </dependency>
+    </dependencies>
+
     <repositories>
         <repository>
             <id>pasteus-github-mvn-repo</id>

@@ -11,6 +11,10 @@ public abstract class AbstractTrie implements Trie {
 
     private static final long serialVersionUID = -1248675089180379915L;
 
+    /**
+     * @author Lucien
+     * @version 1.0.0
+     */
     @Getter
     public static abstract class AbstractNode implements Trie.Node {
 
