@@ -30,18 +30,18 @@ public class NormalNLP implements NLP {
 
     public NormalNLP() {
         try {
-            File file = new File("dictionary/stoppedWords.txt");
+            File file = new File("dictionary/stopwords.txt");
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String buffer;
             while (null != (buffer = bufferedReader.readLine())) {
                 stoppedWords.add(buffer);
             }
         } catch (FileNotFoundException e) {
-            log.error("File \"dictionary/stoppedWords.txt\" is not exist");
-            stoppedWords = Arrays.asList("", "的", "，", "。");
+            log.error("File \"dictionary/stopwords.txt\" is not exist");
+            stoppedWords = Arrays.asList("的", "，", "。");
         } catch (IOException e) {
             log.error("Read file failed, error = ", e);
-            stoppedWords = Arrays.asList("", "的", "，", "。");
+            stoppedWords = Arrays.asList("的", "，", "。");
         }
     }
 
