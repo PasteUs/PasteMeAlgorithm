@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class NormalAhoCorasick implements AhoCorasick {
      * @param word  词
      * @param index 词在字典中的下标
      */
-    private void add(String word, int index) {
+    private void add(@NotNull String word, int index) {
         Node buffer = this.root;
         for (Character character : word.toCharArray()) {
             buffer = buffer.add(character, size++);
@@ -72,7 +73,7 @@ public class NormalAhoCorasick implements AhoCorasick {
      *
      * @param dictionary 字典
      */
-    private void addAll(List<String> dictionary) {
+    private void addAll(@NotNull List<String> dictionary) {
         for (int i = 0; i < dictionary.size(); i++) {
             add(dictionary.get(i), i);
         }
@@ -109,7 +110,7 @@ public class NormalAhoCorasick implements AhoCorasick {
     }
 
     @Override
-    public boolean build(List<String> dictionary) {
+    public boolean build(@NotNull List<String> dictionary) {
         this.dictionary = new String[dictionary.size()];
         dictionary.toArray(this.dictionary);
         this.addAll(dictionary);
@@ -142,7 +143,7 @@ public class NormalAhoCorasick implements AhoCorasick {
     }
 
     @Override
-    public List<String> match(String text) {
+    public List<String> match(@NotNull String text) {
         List<String> result = new ArrayList<>();
         boolean[] vis = new boolean[this.size];
         baseMatch(text, (buffer) -> {
@@ -158,7 +159,7 @@ public class NormalAhoCorasick implements AhoCorasick {
     }
 
     @Override
-    public List<Pair<String, Long>> countMatch(String text) {
+    public List<Pair<String, Long>> countMatch(@NotNull String text) {
         Map<String, Long> count = new TreeMap<>();
         baseMatch(text, (buffer) -> {
             while (buffer != root) {
@@ -174,12 +175,12 @@ public class NormalAhoCorasick implements AhoCorasick {
     }
 
     @Override
-    public List<Pair<String, Long>> locationMatch(String text) {
+    public List<Pair<String, Long>> locationMatch(@NotNull String text) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean save(String filePath) {
+    public boolean save(@NotNull String filePath) {
         return save(filePath, (objectOutputStream) -> {
             objectOutputStream.writeObject(this.root);
             objectOutputStream.writeObject(this.dictionary);
@@ -187,7 +188,7 @@ public class NormalAhoCorasick implements AhoCorasick {
     }
 
     @Override
-    public boolean load(String filePath) {
+    public boolean load(@NotNull String filePath) {
         return load(filePath, (objectInputStream) -> {
             this.root = (Node) objectInputStream.readObject();
             this.dictionary = (String[]) objectInputStream.readObject();
@@ -195,7 +196,13 @@ public class NormalAhoCorasick implements AhoCorasick {
     }
 
     interface MatchWords {
-        void match(Node buffer);
+
+        /**
+         * lambda 函数
+         *
+         * @param buffer node
+         */
+        void match(@NotNull Node buffer);
     }
 
     /**
@@ -248,7 +255,7 @@ public class NormalAhoCorasick implements AhoCorasick {
         }
 
         @Override
-        public Node add(Character character, int index) {
+        public Node add(@NotNull Character character, int index) {
             Node buffer = this.get(character);
             if (null != buffer) {
                 return buffer;
@@ -261,7 +268,7 @@ public class NormalAhoCorasick implements AhoCorasick {
         }
 
         @Override
-        public Node get(Character character) {
+        public Node get(@NotNull Character character) {
             if (this.getNext().containsKey(character)) {
                 return this.getNext().get(character);
             }

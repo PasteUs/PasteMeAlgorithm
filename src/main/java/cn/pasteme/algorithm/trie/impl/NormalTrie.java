@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class NormalTrie implements Trie {
     }
 
     @Override
-    public void add(String word, int index) {
+    public void add(@NotNull String word, int index) {
         Node buffer = this.root;
         for (Character character : word.toCharArray()) {
             buffer = buffer.add(character, -1);
@@ -51,7 +52,7 @@ public class NormalTrie implements Trie {
     }
 
     @Override
-    public List<String> getByPrefix(String prefix) {
+    public List<String> getByPrefix(@NotNull String prefix) {
         Node node = matchNode(prefix);
         if (null != node) {
             return getByPrefix(prefix, node);
@@ -66,7 +67,7 @@ public class NormalTrie implements Trie {
      * @param node Node
      * @return String list
      */
-    private List<String> getByPrefix(String prefix, Node node) {
+    private List<String> getByPrefix(@NotNull String prefix, @NotNull Node node) {
         List<String> result = new ArrayList<>();
         if (node.isEmpty()) {
             result.add(prefix);
@@ -92,7 +93,7 @@ public class NormalTrie implements Trie {
      * @param prefix 前缀
      * @return 完全匹配 prefix 的 Node
      */
-    private Node matchNode(String prefix) {
+    private Node matchNode(@NotNull String prefix) {
         Node current = this.root, buffer;
         for (int i = 0; i < prefix.length(); i++) {
             buffer = current.get(prefix.charAt(i));
@@ -105,7 +106,7 @@ public class NormalTrie implements Trie {
     }
 
     @Override
-    public boolean exist(String word) {
+    public boolean exist(@NotNull String word) {
         Node current = this.root, buffer;
         for (int i = 0; i < word.length(); i++) {
             buffer = current.get(word.charAt(i));
@@ -118,14 +119,14 @@ public class NormalTrie implements Trie {
     }
 
     @Override
-    public boolean save(String path) {
+    public boolean save(@NotNull String path) {
         return save(path, (objectOutputStream) -> {
             objectOutputStream.writeObject(this.root);
         });
     }
 
     @Override
-    public boolean load(String path) {
+    public boolean load(@NotNull String path) {
         return load(path, (objectInputStream) -> {
             this.root = (Node) objectInputStream.readObject();
         });
@@ -156,7 +157,7 @@ public class NormalTrie implements Trie {
         }
 
         @Override
-        public Node add(Character character, int index) {
+        public Node add(@NotNull Character character, int index) {
             Node buffer = this.get(character);
             if (null != buffer) {
                 return buffer;
@@ -169,7 +170,7 @@ public class NormalTrie implements Trie {
         }
 
         @Override
-        public Node get(Character character) {
+        public Node get(@NotNull Character character) {
             if (this.getNext().containsKey(character)) {
                 return this.getNext().get(character);
             }

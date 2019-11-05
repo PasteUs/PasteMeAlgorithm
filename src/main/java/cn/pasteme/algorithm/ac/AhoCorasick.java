@@ -3,6 +3,7 @@ package cn.pasteme.algorithm.ac;
 import cn.pasteme.algorithm.common.Persistent;
 import cn.pasteme.algorithm.pair.Pair;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public interface AhoCorasick extends Persistent {
      * @param dictionary 词典
      * @return 构建成功与否
      */
-    boolean build(List<String> dictionary);
+    boolean build(@NotNull List<String> dictionary);
 
     /**
      * 朴素文本匹配，只返回出现过的词的集合
@@ -25,7 +26,7 @@ public interface AhoCorasick extends Persistent {
      * @param text 文本
      * @return 命中的词
      */
-    List<String> match(String text);
+    List<String> match(@NotNull String text);
 
     /**
      * 计数文本匹配，返回出现的词以及它出现的次数
@@ -33,7 +34,7 @@ public interface AhoCorasick extends Persistent {
      * @param text 文本
      * @return 命中的词以及它出现的次数
      */
-    List<Pair<String, Long>> countMatch(String text);
+    List<Pair<String, Long>> countMatch(@NotNull String text);
 
     /**
      * 下标文本匹配，返回出现的词以及它在文本中的下标
@@ -41,5 +42,5 @@ public interface AhoCorasick extends Persistent {
      * @param text 文本
      * @return 命中的词以及它出现的位置
      */
-    List<Pair<String, Long>> locationMatch(String text);
+    List<Pair<String, Long>> locationMatch(@NotNull String text);
 }
