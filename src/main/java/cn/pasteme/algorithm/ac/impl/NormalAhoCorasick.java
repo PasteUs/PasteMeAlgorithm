@@ -1,14 +1,14 @@
 package cn.pasteme.algorithm.ac.impl;
 
-import cn.pasteme.algorithm.trie.AbstractTrie;
 import cn.pasteme.algorithm.ac.AhoCorasick;
 
+import cn.pasteme.algorithm.pair.Pair;
+import cn.pasteme.algorithm.trie.AbstractTrie.AbstractNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,8 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
+ * 朴素 AhoCorasick
+ *
  * @author Lucien
  * @version 1.0.1
  */
@@ -37,11 +40,16 @@ public class NormalAhoCorasick implements AhoCorasick {
     private static final long serialVersionUID = -1349524541271539944L;
 
     /**
+     * 整棵树的节点个数
+     */
+    private int size;
+
+    /**
      * @author Lucien
      * @version 1.0.0
      */
     @Getter
-    static class Node extends AbstractTrie.AbstractNode {
+    static class Node extends AbstractNode {
 
         /**
          * 序列化 UID，新增字段请在最后面增加
@@ -54,31 +62,45 @@ public class NormalAhoCorasick implements AhoCorasick {
         private Map<Character, Node> next;
 
         /**
-         * 对应词在字典中的下标
+         * 节点下标
          */
         @Setter
-        private int index;
+        private int nodeIndex;
+
+        /**
+         * 词在词典中的下标
+         */
+        @Setter
+        private int wordIndex;
 
         /**
          * Fail 指针
          */
         @Setter
+        @Getter
         private Node fail;
 
-        Node(int depth) {
+        @Override
+        public boolean isEnd() {
+            return this.wordIndex != -1;
+        }
+
+        Node(int depth, int nodeIndex) {
             super(depth);
             this.next = new TreeMap<>();
             this.fail = null;
+            this.nodeIndex = nodeIndex;
+            this.wordIndex = -1;
         }
 
         @Override
-        public Node add(Character character) {
+        public Node add(Character character, int index) {
             Node buffer = this.get(character);
             if (null != buffer) {
                 return buffer;
             }
 
-            buffer = new Node(this.getDepth() + 1);
+            buffer = new Node(this.getDepth() + 1, index);
             this.getNext().put(character, buffer);
 
             return buffer;
@@ -114,22 +136,26 @@ public class NormalAhoCorasick implements AhoCorasick {
      */
     private String[] dictionary;
 
+    interface MatchWords {
+        void match(Node buffer);
+    }
+
     public NormalAhoCorasick() {
-        this.root = new Node(0);
+        this.root = new Node(0, size++);
     }
 
     /**
      * 将词汇插入字典树
      *
-     * @param word 词
+     * @param word  词
+     * @param index 词在字典中的下标
      */
     private void add(String word, int index) {
         Node buffer = this.root;
         for (Character character : word.toCharArray()) {
-            buffer = buffer.add(character);
+            buffer = buffer.add(character, size++);
         }
-        buffer.setEnd(true);
-        buffer.setIndex(index);
+        buffer.setWordIndex(index);
     }
 
     /**
@@ -182,20 +208,19 @@ public class NormalAhoCorasick implements AhoCorasick {
         return true;
     }
 
-    @Override
-    public List<String> match(String text) {
-        List<String> result = new ArrayList<>();
+    /**
+     * match 基函数
+     *
+     * @param text       文本
+     * @param matchWords 当到达某个节点的时候进行的动作
+     */
+    private void baseMatch(String text, MatchWords matchWords) {
         Node cur = this.root;
         int index = 0;
         while (index < text.length()) {
             if (cur.getNext().containsKey(text.charAt(index))) {
                 Node buffer = cur.get(text.charAt(index));
-                while (buffer != root) {
-                    if (buffer.isEnd()) {
-                        result.add(this.dictionary[buffer.index]);
-                    }
-                    buffer = buffer.getFail();
-                }
+                matchWords.match(buffer);
                 cur = cur.get(text.charAt(index++));
             } else {
                 if (cur != root) {
@@ -205,39 +230,58 @@ public class NormalAhoCorasick implements AhoCorasick {
                 }
             }
         }
+    }
+
+    @Override
+    public List<String> match(String text) {
+        List<String> result = new ArrayList<>();
+        boolean[] vis = new boolean[this.size];
+        baseMatch(text, (buffer) -> {
+            while (buffer != root && !vis[buffer.getNodeIndex()]) {
+                if (buffer.isEnd()) {
+                    result.add(this.dictionary[buffer.getWordIndex()]);
+                }
+                vis[buffer.getNodeIndex()] = true;
+                buffer = buffer.getFail();
+            }
+        });
         return result;
     }
 
     @Override
+    public List<Pair<String, Long>> countMatch(String text) {
+        Map<String, Long> count = new TreeMap<>();
+        baseMatch(text, (buffer) -> {
+            while (buffer != root) {
+                if (buffer.isEnd()) {
+                    String word = this.dictionary[buffer.getWordIndex()];
+                    count.put(word, 1L + count.getOrDefault(word, 0L));
+                }
+                buffer = buffer.getFail();
+            }
+        });
+
+        return count.entrySet().stream().map(each -> new Pair<>(each.getKey(), each.getValue())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pair<String, Long>> locationMatch(String text) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean save(String filePath) {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        return save(filePath, (objectOutputStream) -> {
             objectOutputStream.writeObject(this.root);
             objectOutputStream.writeObject(this.dictionary);
-            objectOutputStream.close();
-            fileOutputStream.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+        });
     }
 
     @Override
     public boolean load(String filePath) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(filePath);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        return load(filePath, (objectInputStream) -> {
             this.root = (Node) objectInputStream.readObject();
             this.dictionary = (String[]) objectInputStream.readObject();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            log.error("Trie class not found");
-            e.printStackTrace();
-        }
-        return false;
+        });
     }
 }

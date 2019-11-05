@@ -1,5 +1,7 @@
 package cn.pasteme.algorithm.trie;
 
+import cn.pasteme.algorithm.common.Persistent;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
  * @author Lucien
  * @version 1.0.2
  */
-public interface Trie extends Serializable {
+public interface Trie extends Persistent {
 
     /**
      * @author Lucien
@@ -19,9 +21,20 @@ public interface Trie extends Serializable {
          * 为当前节点添加一个由某字符转移的子节点
          *
          * @param character 字符
+         * @param index 节点下标
          * @return Node
          */
-        Node add(Character character);
+        Node add(Character character, int index);
+
+        /**
+         * 为当前节点添加一个由某字符转移的子节点
+         *
+         * @param character 字符
+         * @return Node
+         */
+        default Node add(Character character) {
+            return add(character, -1);
+        }
 
         /**
          * 当前节点沿着某字符会到达的节点
@@ -50,8 +63,9 @@ public interface Trie extends Serializable {
      * 向字典中添加词汇
      *
      * @param word 词汇
+     * @param index 词在字典中的下标
      */
-    void add(String word);
+    void add(String word, int index);
 
     /**
      * 向字典中添加词典
@@ -59,8 +73,8 @@ public interface Trie extends Serializable {
      * @param dictionary 词汇
      */
     default void addAll(List<String> dictionary) {
-        for (String each : dictionary) {
-            add(each);
+        for (int i = 0; i < dictionary.size(); i++) {
+            add(dictionary.get(i), i);
         }
     }
 
@@ -79,20 +93,4 @@ public interface Trie extends Serializable {
      * @return boolean
      */
     boolean exist(String word);
-
-    /**
-     * 将当前的状态持久化至存储
-     *
-     * @param path 文件路径
-     * @return 持久化是否成功
-     */
-    boolean save(String path);
-
-    /**
-     * 从存储加载对象
-     *
-     * @param path 文件路径
-     * @return 加载是否成功
-     */
-    boolean load(String path);
 }
