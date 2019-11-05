@@ -2,17 +2,18 @@ package cn.pasteme.algorithm.test.nlp;
 
 import cn.pasteme.algorithm.nlp.NLP;
 import cn.pasteme.algorithm.nlp.impl.NormalNLP;
-import static org.junit.Assert.*;
-
 import cn.pasteme.algorithm.pair.Pair;
+
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Lucien
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class PasteMeAlgorithmNLPTest {
 

@@ -6,6 +6,7 @@ import com.hankcs.hanlp.HanLP;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,13 +47,13 @@ public class NormalNLP implements NLP {
     }
 
     @Override
-    public List<String> tokenize(String content) {
+    public List<String> tokenize(@NotNull String content) {
         return HanLP.segment(content).stream()
                 .map(item -> item.word).filter(item -> !item.isBlank() && !stoppedWords.contains(item.trim())).collect(Collectors.toList());
     }
 
     @Override
-    public List<Pair<String, Long>> countToken(String content) {
+    public List<Pair<String, Long>> countToken(@NotNull String content) {
         List<String> tokenList = tokenize(content);
         Map<String, Long> count = new TreeMap<>();
 
