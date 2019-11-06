@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.pasteme</groupId>
         <artifactId>pasteme-root</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
     <artifactId>pasteme-algorithm</artifactId>
     <version>1.0.3-SNAPSHOT</version>
@@ -15,6 +15,11 @@
     <description>PasteMe Algorithm Collection</description>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.hankcs</groupId>
             <artifactId>hanlp</artifactId>
