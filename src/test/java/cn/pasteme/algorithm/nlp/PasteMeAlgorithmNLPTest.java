@@ -1,26 +1,34 @@
-package cn.pasteme.algorithm.test.nlp;
+package cn.pasteme.algorithm.nlp;
 
-import cn.pasteme.algorithm.nlp.NLP;
-import cn.pasteme.algorithm.nlp.impl.NormalNLP;
 import cn.pasteme.algorithm.pair.Pair;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * @author Lucien
- * @version 1.0.1
+ * @version 1.0.2
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class PasteMeAlgorithmNLPTest {
 
-    private NLP nlp = new NormalNLP();
+    @Autowired
+    private NLP nlp;
 
     @Test
     public void NLPTokenizerTest() {
+        assertNotEquals(Arrays.asList("NLP", "中文", "分词", "测试", "English", "tokenizer", "test"), nlp.tokenize("NLP 中文分词测试，English tokenizer test"));
+        nlp.addStopWords(Arrays.asList("，", "。"));
         assertEquals(Arrays.asList("NLP", "中文", "分词", "测试", "English", "tokenizer", "test"), nlp.tokenize("NLP 中文分词测试，English tokenizer test"));
     }
 
