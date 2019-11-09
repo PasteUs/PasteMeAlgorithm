@@ -1,4 +1,4 @@
-package cn.pasteme.algorithm.test.trie.common;
+package cn.pasteme.algorithm.trie.common;
 
 import cn.pasteme.algorithm.trie.Trie;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * @author Lucien
- * @version 1.0.2
+ * @version 1.0.3
  */
 @Slf4j
 public class Common {

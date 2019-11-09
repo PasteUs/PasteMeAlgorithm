@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Lucien
- * @version 1.0.0
+ * @version 1.0.1
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.pasteme.algorithm")
 public class AlgorithmApplication {
     public static void main(String[] args) {
         SpringApplication.run(AlgorithmApplication.class, args);

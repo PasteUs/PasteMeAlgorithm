@@ -1,6 +1,6 @@
-package cn.pasteme.algorithm.test.trie;
+package cn.pasteme.algorithm.trie;
 
-import cn.pasteme.algorithm.test.trie.common.Common;
+import cn.pasteme.algorithm.trie.common.Common;
 import cn.pasteme.algorithm.trie.impl.NormalTrie;
 
 import org.junit.Test;

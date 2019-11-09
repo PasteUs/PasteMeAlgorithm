@@ -1,6 +1,5 @@
-package cn.pasteme.algorithm.test.ac;
+package cn.pasteme.algorithm.ac;
 
-import cn.pasteme.algorithm.ac.AhoCorasick;
 import cn.pasteme.algorithm.pair.Pair;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +21,10 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * @author Lucien
- * @version 1.1.1
+ * @version 1.1.2
  */
 @Slf4j
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RunWith(SpringRunner.class)
 public class PasteMeAlgorithmAhoCorasickTest {
 

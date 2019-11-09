@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author Lucien
- * @version 1.1.0
+ * @version 1.2.0
  */
 public interface NLP {
 
@@ -25,4 +25,11 @@ public interface NLP {
      * @return Pair<分词, 次数>
      */
     List<Pair<String, Long>> countToken(String content);
+
+    /**
+     * 添加停用词
+     *
+     * @param stopWords 停用词表
+     */
+    void addStopWords(List<String> stopWords);
 }
