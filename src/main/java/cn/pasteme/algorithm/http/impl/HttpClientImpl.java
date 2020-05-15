@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  * @version 1.0.0
  */
 @Slf4j
-public class HttpClientImpl {
+public class HttpClientImpl implements cn.pasteme.algorithm.http.HttpClient {
 
     private final HttpClient httpClient;
 
@@ -36,7 +36,13 @@ public class HttpClientImpl {
         return byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
     }
 
+    @Override
     public JSONObject post(String url, JSONObject json) throws IOException {
+        return post(url, json.toString());
+    }
+
+    @Override
+    public JSONObject post(String url, String json) throws IOException {
         HttpPost request = new HttpPost(url);
         StringEntity params = new StringEntity(json.toString());
         request.addHeader("Content-Type", "application/json");
