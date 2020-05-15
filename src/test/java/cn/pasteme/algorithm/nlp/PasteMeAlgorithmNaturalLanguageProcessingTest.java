@@ -20,21 +20,21 @@ import static org.junit.Assert.assertNotEquals;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class PasteMeAlgorithmNLPTest {
+public class PasteMeAlgorithmNaturalLanguageProcessingTest {
 
     @Autowired
-    private NLP nlp;
+    private NaturalLanguageProcessing naturalLanguageProcessing;
 
     @Test
     public void NLPTokenizerTest() {
-        assertNotEquals(Arrays.asList("NLP", "中文", "分词", "测试", "English", "tokenizer", "test"), nlp.tokenize("NLP 中文分词测试，English tokenizer test"));
-        nlp.addStopWords(Arrays.asList("，", "。"));
-        assertEquals(Arrays.asList("NLP", "中文", "分词", "测试", "English", "tokenizer", "test"), nlp.tokenize("NLP 中文分词测试，English tokenizer test"));
+        assertNotEquals(Arrays.asList("NaturalLanguageProcessing", "中文", "分词", "测试", "English", "tokenizer", "test"), naturalLanguageProcessing.tokenize("NaturalLanguageProcessing 中文分词测试，English tokenizer test"));
+        naturalLanguageProcessing.addStopWords(Arrays.asList("，", "。"));
+        assertEquals(Arrays.asList("NaturalLanguageProcessing", "中文", "分词", "测试", "English", "tokenizer", "test"), naturalLanguageProcessing.tokenize("NaturalLanguageProcessing 中文分词测试，English tokenizer test"));
     }
 
     @Test
     public void NLPCountTokenTest() {
-        List<Pair<String, Long>> result = nlp.countToken("NLP 中文分词测试，English tokenizer test\n再次测试");
+        List<Pair<String, Long>> result = naturalLanguageProcessing.countToken("NaturalLanguageProcessing 中文分词测试，English tokenizer test\n再次测试");
         assertEquals("测试", result.get(0).getKey());
         assertEquals(Long.valueOf(2), result.get(0).getValue());
     }
