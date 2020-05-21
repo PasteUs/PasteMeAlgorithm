@@ -44,7 +44,7 @@ public class HttpClientImpl implements cn.pasteme.algorithm.http.HttpClient {
     @Override
     public JSONObject post(String url, String json) throws IOException {
         HttpPost request = new HttpPost(url);
-        StringEntity params = new StringEntity(json.toString());
+        StringEntity params = new StringEntity(json);
         request.addHeader("Content-Type", "application/json");
         request.setEntity(params);
         HttpResponse response = httpClient.execute(request);

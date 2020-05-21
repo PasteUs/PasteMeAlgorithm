@@ -19,8 +19,8 @@ public class HttpClientImplTest extends TestCase {
         HttpClient httpClient = new HttpClientImpl();
         try {
             JSONObject jsonResponse = httpClient.post(
-                    "http://docker:8501/v1/models/PasteMeRIM:predict",
-                    "{\"instances\": [[1.0, 2.0], [2.0, 3.0]]}");
+                    "http://predict.pasteme.lucien.ink/v1/models/PasteMeRIM:predict",
+                    "{\"content\": \"Hello World!\"}");
             log.info("{}", jsonResponse);
         } catch (Exception e) {
             e.printStackTrace();
