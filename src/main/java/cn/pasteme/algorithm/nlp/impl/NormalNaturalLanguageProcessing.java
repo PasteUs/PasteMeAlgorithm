@@ -1,7 +1,7 @@
 package cn.pasteme.algorithm.nlp.impl;
 
 import cn.pasteme.algorithm.dictionary.Dictionary;
-import cn.pasteme.algorithm.nlp.NLP;
+import cn.pasteme.algorithm.nlp.NaturalLanguageProcessing;
 import cn.pasteme.algorithm.pair.Pair;
 import com.hankcs.hanlp.HanLP;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,14 +19,15 @@ import java.util.stream.Collectors;
  */
 @Component
 @Qualifier("normalNlp")
-public class NormalNLP implements NLP {
+public class NormalNaturalLanguageProcessing implements NaturalLanguageProcessing {
 
-    private Dictionary stopWords;
+    private final Dictionary stopWords;
 
-    public NormalNLP(Dictionary stopWords) {
+    public NormalNaturalLanguageProcessing(Dictionary stopWords) {
         this.stopWords = stopWords;
     }
 
+    @Override
     public void addStopWords(List<String> stopWords) {
         this.stopWords.addAll(stopWords);
     }

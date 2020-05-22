@@ -8,7 +8,7 @@ import java.util.List;
  * @author Lucien
  * @version 1.2.0
  */
-public interface NLP {
+public interface NaturalLanguageProcessing {
 
     /**
      * 分词
