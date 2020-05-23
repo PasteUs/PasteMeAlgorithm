@@ -1,0 +1,7 @@
+pasteme:
+  algorithm:
+    model:
+      TextRiskClassificationImpl:
+        modelName: "PasteMeRIM"
+        host: "localhost:5000"
+
