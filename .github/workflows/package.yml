@@ -25,4 +25,5 @@ jobs:
       - name: Maven ${{ matrix.mvn_action }}
         run: |
           mvn --file pom.xml \
+              -Dspring.config.location=.github/application.yml \
               ${{ matrix.mvn_action }}
