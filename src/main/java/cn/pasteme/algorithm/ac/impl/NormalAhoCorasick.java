@@ -3,7 +3,6 @@ package cn.pasteme.algorithm.ac.impl;
 import cn.pasteme.algorithm.ac.AhoCorasick;
 import cn.pasteme.algorithm.pair.Pair;
 import cn.pasteme.algorithm.trie.AbstractTrie.AbstractNode;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +40,12 @@ public class NormalAhoCorasick implements AhoCorasick {
      * 整棵树的节点个数
      */
     private int size;
+
     /**
      * 字典树根节点
      */
     private Node root;
+
     /**
      * 字典
      */
