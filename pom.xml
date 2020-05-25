@@ -10,7 +10,7 @@
         <version>1.0.3-SNAPSHOT</version>
     </parent>
     <artifactId>pasteme-algorithm</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.5-SNAPSHOT</version>
     <name>PasteMe Algorithm</name>
     <description>PasteMe Algorithm Collection</description>
 
