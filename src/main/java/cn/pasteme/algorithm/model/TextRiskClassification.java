@@ -1,5 +1,7 @@
 package cn.pasteme.algorithm.model;
 
+import java.io.IOException;
+
 /**
  * 通过 HTTP 调用 TensorFlow serving 的 API
  *
@@ -12,7 +14,8 @@ public interface TextRiskClassification {
      * 调用模型
      *
      * @param jsonString 模型参数
-     * @return JSON 模型的推理结果
+     * @return 模型的推理结果，0 代表 Normal，1 代表 Risk
+     * @throws IOException HTTP 请求出错
      */
-    int inference(String jsonString);
+    int inference(String jsonString) throws IOException;
 }

@@ -7,9 +7,9 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,16 +39,12 @@ public class TextRiskClassificationImpl implements TextRiskClassification {
     }
 
     @Override
-    public int inference(String content) {
-        try {
-            JSONObject jsonRequest = new JSONObject();
-            jsonRequest.put("content", content);
-            JSONObject jsonResponse = httpClient.post(this.url, jsonRequest);
-            List<Integer> resultList = jsonResponse.getJSONArray("predictions").toJavaList(Integer.class);
-            assert resultList.size() == 1;
-            return resultList.get(0);
-        } catch (Exception e) {
-            return -1;
-        }
+    public int inference(String content) throws IOException {
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("content", content);
+        JSONObject jsonResponse = httpClient.post(this.url, jsonRequest);
+        List<Integer> resultList = jsonResponse.getJSONArray("predictions").toJavaList(Integer.class);
+        assert resultList.size() == 1;
+        return resultList.get(0);
     }
 }

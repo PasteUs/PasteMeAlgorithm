@@ -2,19 +2,18 @@ package cn.pasteme.algorithm.http.impl;
 
 import cn.pasteme.algorithm.http.HttpClient;
 import com.alibaba.fastjson.JSONObject;
-import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @Slf4j
-public class HttpClientImplTest extends TestCase {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@RunWith(SpringRunner.class)
+public class HttpClientImplTest {
 
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void tearDown() throws Exception {
-    }
-
+    @Test
     public void testPost() {
         HttpClient httpClient = new HttpClientImpl();
         try {
