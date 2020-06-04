@@ -1,4 +1,4 @@
-package cn.pasteme.algorithm.http.impl;
+package cn.pasteme.algorithm.http;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ public class HttpClientImpl implements cn.pasteme.algorithm.http.HttpClient {
     @Override
     public JSONObject post(String url, String json) throws IOException {
         HttpPost request = new HttpPost(url);
-        StringEntity params = new StringEntity(json);
+        StringEntity params = new StringEntity(json, "UTF-8");
         request.addHeader("Content-Type", "application/json");
         request.setEntity(params);
         HttpResponse response = httpClient.execute(request);

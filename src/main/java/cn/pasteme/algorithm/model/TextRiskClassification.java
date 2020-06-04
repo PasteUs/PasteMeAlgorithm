@@ -13,9 +13,9 @@ public interface TextRiskClassification {
     /**
      * 调用模型
      *
-     * @param jsonString 模型参数
+     * @param content 文本内容
      * @return 模型的推理结果，0 代表 Normal，1 代表 Risk
      * @throws IOException HTTP 请求出错
      */
-    int inference(String jsonString) throws IOException;
+    int inference(String content) throws IOException;
 }

@@ -1,8 +1,6 @@
-package cn.pasteme.algorithm.model.impl;
+package cn.pasteme.algorithm.model;
 
 import cn.pasteme.algorithm.http.HttpClient;
-import cn.pasteme.algorithm.http.impl.HttpClientImpl;
-import cn.pasteme.algorithm.model.TextRiskClassification;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
