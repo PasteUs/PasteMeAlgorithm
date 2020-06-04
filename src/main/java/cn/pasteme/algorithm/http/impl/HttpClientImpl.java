@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
  * @version 1.0.0
  */
 @Slf4j
+@Component
 public class HttpClientImpl implements cn.pasteme.algorithm.http.HttpClient {
 
     private final HttpClient httpClient;
@@ -50,6 +52,7 @@ public class HttpClientImpl implements cn.pasteme.algorithm.http.HttpClient {
         HttpResponse response = httpClient.execute(request);
         InputStream inputStream = response.getEntity().getContent();
         String stringResponse = inputStreamToString(inputStream);
+        log.info("Get response = {} from {}", stringResponse, url);
         return JSONObject.parseObject(stringResponse);
     }
 
